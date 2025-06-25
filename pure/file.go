@@ -1,7 +1,6 @@
 package pure
 
 import (
-	"fmt"
 	"io"
 	"log"
 	"runtime"
@@ -86,17 +85,17 @@ func Create(name string) (*File, error) {
 func OpenFile(name, mode string) (*File, error) {
 	namePtr, err := unix.BytePtrFromString(name)
 	if err != nil {
-		return nil, fmt.Errorf("invalid filename: %v", err)
+		return nil, err
 	}
 
 	modePtr, err := unix.BytePtrFromString(mode)
 	if err != nil {
-		return nil, fmt.Errorf("invalid mode: %v", err)
+		return nil, err
 	}
 
 	stream := libcFopen(namePtr, modePtr)
 	if stream == 0 {
-		return nil, fmt.Errorf("failed to open file %s", name)
+		return nil, unix.EINVAL // or some other error
 	}
 
 	return &File{
@@ -108,12 +107,12 @@ func OpenFile(name, mode string) (*File, error) {
 // Close closes the file
 func (f *File) Close() error {
 	if f.stream == 0 {
-		return fmt.Errorf("file already closed")
+		return nil // already closed
 	}
 
 	ret := libcFclose(f.stream)
 	if ret != 0 {
-		return fmt.Errorf("failed to close file")
+		return unix.EINVAL // failed to close
 	}
 
 	f.stream = 0
@@ -123,7 +122,7 @@ func (f *File) Close() error {
 // Read reads data into buffer
 func (f *File) Read(p []byte) (n int, err error) {
 	if f.stream == 0 {
-		return 0, fmt.Errorf("file is closed")
+		return 0, unix.EBADF // file is closed
 	}
 
 	if len(p) == 0 {
@@ -137,7 +136,7 @@ func (f *File) Read(p []byte) (n int, err error) {
 // Write writes data from buffer to file
 func (f *File) Write(p []byte) (n int, err error) {
 	if f.stream == 0 {
-		return 0, fmt.Errorf("file is closed")
+		return 0, unix.EBADF // file is closed
 	}
 
 	if len(p) == 0 {
