@@ -1,64 +1,60 @@
-goos: linux
-goarch: amd64
-pkg: github.com/yuchanns/fileplay
-cpu: Intel(R) Core(TM) i5-10500 CPU @ 3.10GHz
 BenchmarkFileWrite
-BenchmarkFileWrite/4KiB
-BenchmarkFileWrite/4KiB-12                     24674             49739 ns/op             936 B/op         22 allocs/op
-BenchmarkFileWrite/4KiB-12                     23163             51888 ns/op             936 B/op         22 allocs/op
-BenchmarkFileWrite/4KiB-12                     23816             50744 ns/op             936 B/op         22 allocs/op
-BenchmarkFileWrite/4KiB-12                     23613             51115 ns/op             936 B/op         22 allocs/op
-BenchmarkFileWrite/4KiB-12                     23875             50406 ns/op             936 B/op         22 allocs/op
-BenchmarkFileWrite/4KiB-12                     23132             51172 ns/op             936 B/op         22 allocs/op
-BenchmarkFileWrite/256KiB
-BenchmarkFileWrite/256KiB-12                    4080            293608 ns/op             936 B/op         22 allocs/op
-BenchmarkFileWrite/256KiB-12                    4092            404825 ns/op             936 B/op         22 allocs/op
-BenchmarkFileWrite/256KiB-12                    4182            387769 ns/op             936 B/op         22 allocs/op
-BenchmarkFileWrite/256KiB-12                    3890            391870 ns/op             936 B/op         22 allocs/op
-BenchmarkFileWrite/256KiB-12                    3648            308702 ns/op             936 B/op         22 allocs/op
-BenchmarkFileWrite/256KiB-12                    4060            291950 ns/op             936 B/op         22 allocs/op
-BenchmarkFileWrite/4MiB
-BenchmarkFileWrite/4MiB-12                       196           5750665 ns/op             936 B/op         22 allocs/op
-BenchmarkFileWrite/4MiB-12                       232           5614517 ns/op             936 B/op         22 allocs/op
-BenchmarkFileWrite/4MiB-12                       189           6582067 ns/op             936 B/op         22 allocs/op
-BenchmarkFileWrite/4MiB-12                       304           3986958 ns/op             936 B/op         22 allocs/op
-BenchmarkFileWrite/4MiB-12                       298           4024316 ns/op             936 B/op         22 allocs/op
-BenchmarkFileWrite/4MiB-12                       298           4028315 ns/op             936 B/op         22 allocs/op
 BenchmarkFileWrite/16MiB
-BenchmarkFileWrite/16MiB-12                      100          20106176 ns/op             936 B/op         22 allocs/op
-BenchmarkFileWrite/16MiB-12                      100          20840133 ns/op             936 B/op         22 allocs/op
-BenchmarkFileWrite/16MiB-12                      100          19240228 ns/op             936 B/op         22 allocs/op
-BenchmarkFileWrite/16MiB-12                      100          20096828 ns/op             936 B/op         22 allocs/op
-BenchmarkFileWrite/16MiB-12                      100          20163189 ns/op             936 B/op         22 allocs/op
-BenchmarkFileWrite/16MiB-12                      100          20841651 ns/op             936 B/op         22 allocs/op
+BenchmarkFileWrite/16MiB-12                      100          12873811 ns/op             936 B/op         22 allocs/op
+BenchmarkFileWrite/16MiB-12                      100          12705863 ns/op             936 B/op         22 allocs/op
+BenchmarkFileWrite/16MiB-12                      100          12193132 ns/op             936 B/op         22 allocs/op
+BenchmarkFileWrite/16MiB-12                      100          12743492 ns/op             936 B/op         22 allocs/op
+BenchmarkFileWrite/16MiB-12                      100          12515586 ns/op             936 B/op         22 allocs/op
+BenchmarkFileWrite/16MiB-12                      100          19863914 ns/op             936 B/op         22 allocs/op
+BenchmarkFileWrite/256KiB
+BenchmarkFileWrite/256KiB-12                    3900            327221 ns/op             936 B/op         22 allocs/op
+BenchmarkFileWrite/256KiB-12                    3657            431938 ns/op             937 B/op         22 allocs/op
+BenchmarkFileWrite/256KiB-12                    4184            364203 ns/op             936 B/op         22 allocs/op
+BenchmarkFileWrite/256KiB-12                    4069            383845 ns/op             936 B/op         22 allocs/op
+BenchmarkFileWrite/256KiB-12                    4122            352218 ns/op             936 B/op         22 allocs/op
+BenchmarkFileWrite/256KiB-12                    3541            467516 ns/op             936 B/op         22 allocs/op
+BenchmarkFileWrite/4KiB
+BenchmarkFileWrite/4KiB-12                     26691             44992 ns/op             936 B/op         22 allocs/op
+BenchmarkFileWrite/4KiB-12                     27079             43996 ns/op             936 B/op         22 allocs/op
+BenchmarkFileWrite/4KiB-12                     26284             45799 ns/op             936 B/op         22 allocs/op
+BenchmarkFileWrite/4KiB-12                     25746             45500 ns/op             936 B/op         22 allocs/op
+BenchmarkFileWrite/4KiB-12                     26689             45610 ns/op             936 B/op         22 allocs/op
+BenchmarkFileWrite/4KiB-12                     25424             47416 ns/op             936 B/op         22 allocs/op
+BenchmarkFileWrite/4MiB
+BenchmarkFileWrite/4MiB-12                       372           3217486 ns/op             936 B/op         22 allocs/op
+BenchmarkFileWrite/4MiB-12                       367           3740026 ns/op             936 B/op         22 allocs/op
+BenchmarkFileWrite/4MiB-12                       302           3902852 ns/op             936 B/op         22 allocs/op
+BenchmarkFileWrite/4MiB-12                       229           5283596 ns/op             936 B/op         22 allocs/op
+BenchmarkFileWrite/4MiB-12                       362           3333920 ns/op             936 B/op         22 allocs/op
+BenchmarkFileWrite/4MiB-12                       296           4646126 ns/op             936 B/op         22 allocs/op
 BenchmarkFileRead
-BenchmarkFileRead/4KiB
-BenchmarkFileRead/4KiB-12                     285462              4159 ns/op            5032 B/op         23 allocs/op
-BenchmarkFileRead/4KiB-12                     285600              4226 ns/op            5032 B/op         23 allocs/op
-BenchmarkFileRead/4KiB-12                     292417              4148 ns/op            5032 B/op         23 allocs/op
-BenchmarkFileRead/4KiB-12                     284001              4171 ns/op            5032 B/op         23 allocs/op
-BenchmarkFileRead/4KiB-12                     286768              4155 ns/op            5032 B/op         23 allocs/op
-BenchmarkFileRead/4KiB-12                     283574              4112 ns/op            5032 B/op         23 allocs/op
-BenchmarkFileRead/256KiB
-BenchmarkFileRead/256KiB-12                    37936             31614 ns/op          263084 B/op         23 allocs/op
-BenchmarkFileRead/256KiB-12                    37290             32142 ns/op          263084 B/op         23 allocs/op
-BenchmarkFileRead/256KiB-12                    38175             31649 ns/op          263084 B/op         23 allocs/op
-BenchmarkFileRead/256KiB-12                    37592             31979 ns/op          263084 B/op         23 allocs/op
-BenchmarkFileRead/256KiB-12                    37873             31711 ns/op          263084 B/op         23 allocs/op
-BenchmarkFileRead/256KiB-12                    37770             31774 ns/op          263084 B/op         23 allocs/op
-BenchmarkFileRead/4MiB
-BenchmarkFileRead/4MiB-12                       2019            566850 ns/op         4195266 B/op         24 allocs/op
-BenchmarkFileRead/4MiB-12                       2092            580535 ns/op         4195266 B/op         24 allocs/op
-BenchmarkFileRead/4MiB-12                       1804            574800 ns/op         4195268 B/op         24 allocs/op
-BenchmarkFileRead/4MiB-12                       1918            565499 ns/op         4195268 B/op         24 allocs/op
-BenchmarkFileRead/4MiB-12                       2000            551563 ns/op         4195268 B/op         24 allocs/op
-BenchmarkFileRead/4MiB-12                       1854            560046 ns/op         4195269 B/op         24 allocs/op
 BenchmarkFileRead/16MiB
-BenchmarkFileRead/16MiB-12                       441           2707144 ns/op        16778207 B/op         25 allocs/op
-BenchmarkFileRead/16MiB-12                       435           2713117 ns/op        16778205 B/op         25 allocs/op
-BenchmarkFileRead/16MiB-12                       440           2729284 ns/op        16778204 B/op         25 allocs/op
-BenchmarkFileRead/16MiB-12                       444           2711657 ns/op        16778204 B/op         25 allocs/op
-BenchmarkFileRead/16MiB-12                       444           2707773 ns/op        16778205 B/op         25 allocs/op
-BenchmarkFileRead/16MiB-12                       438           2720438 ns/op        16778206 B/op         25 allocs/op
+BenchmarkFileRead/16MiB-12                       456           2557075 ns/op        16778204 B/op         25 allocs/op
+BenchmarkFileRead/16MiB-12                       475           2550103 ns/op        16778202 B/op         25 allocs/op
+BenchmarkFileRead/16MiB-12                       484           2458424 ns/op        16778204 B/op         25 allocs/op
+BenchmarkFileRead/16MiB-12                       436           2752047 ns/op        16778204 B/op         25 allocs/op
+BenchmarkFileRead/16MiB-12                       468           2757784 ns/op        16778205 B/op         25 allocs/op
+BenchmarkFileRead/16MiB-12                       450           2734579 ns/op        16778206 B/op         25 allocs/op
+BenchmarkFileRead/256KiB
+BenchmarkFileRead/256KiB-12                    37756             31595 ns/op          263084 B/op         23 allocs/op
+BenchmarkFileRead/256KiB-12                    37951             31416 ns/op          263084 B/op         23 allocs/op
+BenchmarkFileRead/256KiB-12                    38295             31565 ns/op          263084 B/op         23 allocs/op
+BenchmarkFileRead/256KiB-12                    37566             31574 ns/op          263084 B/op         23 allocs/op
+BenchmarkFileRead/256KiB-12                    38035             31549 ns/op          263084 B/op         23 allocs/op
+BenchmarkFileRead/256KiB-12                    37928             31711 ns/op          263084 B/op         23 allocs/op
+BenchmarkFileRead/4KiB
+BenchmarkFileRead/4KiB-12                     287838              4062 ns/op            5032 B/op         23 allocs/op
+BenchmarkFileRead/4KiB-12                     290084              4118 ns/op            5032 B/op         23 allocs/op
+BenchmarkFileRead/4KiB-12                     294019              4143 ns/op            5032 B/op         23 allocs/op
+BenchmarkFileRead/4KiB-12                     281066              4094 ns/op            5032 B/op         23 allocs/op
+BenchmarkFileRead/4KiB-12                     291153              4095 ns/op            5032 B/op         23 allocs/op
+BenchmarkFileRead/4KiB-12                     300409              4135 ns/op            5032 B/op         23 allocs/op
+BenchmarkFileRead/4MiB
+BenchmarkFileRead/4MiB-12                       1918            578143 ns/op         4195266 B/op         24 allocs/op
+BenchmarkFileRead/4MiB-12                       1992            586895 ns/op         4195265 B/op         24 allocs/op
+BenchmarkFileRead/4MiB-12                       2035            604627 ns/op         4195267 B/op         24 allocs/op
+BenchmarkFileRead/4MiB-12                       1773            614506 ns/op         4195267 B/op         24 allocs/op
+BenchmarkFileRead/4MiB-12                       2134            601769 ns/op         4195265 B/op         24 allocs/op
+BenchmarkFileRead/4MiB-12                       2158            558832 ns/op         4195266 B/op         24 allocs/op
 PASS
-ok      github.com/yuchanns/fileplay    194.194s
+ok      github.com/yuchanns/fileplay    243.588s

@@ -17,13 +17,6 @@ var (
 	libcFclose func(stream uintptr) int
 	libcFread  func(ptr unsafe.Pointer, size, nmemb uintptr, stream uintptr) uintptr
 	libcFwrite func(ptr unsafe.Pointer, size, nmemb uintptr, stream uintptr) uintptr
-	libcFseek  func(stream uintptr, offset int, whence int) int
-	libcFtell  func(stream uintptr) int
-	libcRewind func(stream uintptr)
-
-	// File status functions
-	libcAccess func(pathname *byte, mode int) int
-	libcRemove func(filename *byte) int
 )
 
 // Constants definition (macOS/Linux compatible)
@@ -57,11 +50,6 @@ func init() {
 	purego.RegisterLibFunc(&libcFclose, libc, "fclose")
 	purego.RegisterLibFunc(&libcFread, libc, "fread")
 	purego.RegisterLibFunc(&libcFwrite, libc, "fwrite")
-	purego.RegisterLibFunc(&libcFseek, libc, "fseek")
-	purego.RegisterLibFunc(&libcFtell, libc, "ftell")
-	purego.RegisterLibFunc(&libcRewind, libc, "rewind")
-	purego.RegisterLibFunc(&libcAccess, libc, "access")
-	purego.RegisterLibFunc(&libcRemove, libc, "remove")
 }
 
 // File structure similar to os.File
@@ -130,6 +118,9 @@ func (f *File) Read(p []byte) (n int, err error) {
 	}
 
 	count := libcFread(unsafe.Pointer(&p[0]), 1, uintptr(len(p)), f.stream)
+	if int(count) < len(p) {
+		return int(count), io.EOF // end of file reached
+	}
 	return int(count), nil
 }
 

@@ -5,11 +5,13 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"slices"
 	"testing"
 
 	"github.com/google/uuid"
 
 	"github.com/yuchanns/fileplay/ffi"
+	"github.com/yuchanns/fileplay/opendal"
 	"github.com/yuchanns/fileplay/pure"
 )
 
@@ -76,6 +78,17 @@ func (c FFICreator) Create(path string) (io.ReadWriteCloser, error) {
 
 func (c FFICreator) Open(path string) (io.ReadWriteCloser, error) {
 	return ffi.Open(path)
+}
+
+// OpenDALCreator implements FileCreator for OpenDAL
+type OpenDALCreator struct{}
+
+func (c OpenDALCreator) Create(path string) (io.ReadWriteCloser, error) {
+	return opendal.Create(path)
+}
+
+func (c OpenDALCreator) Open(path string) (io.ReadWriteCloser, error) {
+	return opendal.Open(path)
 }
 
 // runBenchmarkWrite performs generic write benchmark for any FileCreator
@@ -147,9 +160,10 @@ func runBenchmarkRead(b *testing.B, creator FileCreator, size Size) {
 
 var (
 	creators = map[string]FileCreator{
-		"pure": PureCreator{},
-		"ffi":  FFICreator{},
-		"OS":   OSFileCreator{},
+		"opendal": OpenDALCreator{},
+		"pure":    PureCreator{},
+		"ffi":     FFICreator{},
+		"os":      OSFileCreator{},
 	}
 
 	sizes = map[string]Size{
@@ -160,23 +174,37 @@ var (
 	}
 )
 
-// BenchmarkFileWrite runs write benchmarks for both OS files and pures
+func getSorted() (sizeNames []string, creatorNames []string) {
+	for sizeName := range sizes {
+		sizeNames = append(sizeNames, sizeName)
+	}
+	for creatorName := range creators {
+		creatorNames = append(creatorNames, creatorName)
+	}
+	slices.Sort(sizeNames)
+	slices.Sort(creatorNames)
+	return
+}
+
+// BenchmarkFileWrite runs write benchmarks
 func BenchmarkFileWrite(b *testing.B) {
-	for sizeName, size := range sizes {
-		for creatorName, creator := range creators {
-			b.Run(fmt.Sprintf("%s_%s", creatorName, sizeName), func(b *testing.B) {
-				runBenchmarkWrite(b, creator, size)
+	sizeNames, creatorNames := getSorted()
+	for sizeName := range sizeNames {
+		for creatorName := range creatorNames {
+			b.Run(fmt.Sprintf("%s_%s", creatorNames[creatorName], sizeNames[sizeName]), func(b *testing.B) {
+				runBenchmarkWrite(b, creators[creatorNames[creatorName]], sizes[sizeNames[sizeName]])
 			})
 		}
 	}
 }
 
-// BenchmarkFileRead runs read benchmarks for both OS files and pures
+// BenchmarkFileRead runs read benchmarks
 func BenchmarkFileRead(b *testing.B) {
-	for sizeName, size := range sizes {
-		for creatorName, creator := range creators {
-			b.Run(fmt.Sprintf("%s_%s", creatorName, sizeName), func(b *testing.B) {
-				runBenchmarkRead(b, creator, size)
+	sizeNames, creatorNames := getSorted()
+	for sizeName := range sizeNames {
+		for creatorName := range creatorNames {
+			b.Run(fmt.Sprintf("%s_%s", creatorNames[creatorName], sizeNames[sizeName]), func(b *testing.B) {
+				runBenchmarkRead(b, creators[creatorNames[creatorName]], sizes[sizeNames[sizeName]])
 			})
 		}
 	}

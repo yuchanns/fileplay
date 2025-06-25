@@ -81,6 +81,9 @@ func (f *File) Read(p []byte) (n int, err error) {
 	}
 
 	count := libcFread.symbol()(unsafe.Pointer(&p[0]), 1, uintptr(len(p)), f.stream)
+	if int(count) < len(p) {
+		return int(count), io.EOF
+	}
 	return int(count), nil
 }
 

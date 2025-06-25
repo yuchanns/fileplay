@@ -9,8 +9,9 @@ import (
 )
 
 var testCreators = map[string]FileCreator{
-	"pure": PureCreator{},
-	"ffi":  FFICreator{},
+	"pure":    PureCreator{},
+	"ffi":     FFICreator{},
+	"opendal": OpenDALCreator{},
 }
 
 // TestFileCreateAndClose tests basic file creation and closing
@@ -285,6 +286,64 @@ func TestFileMultipleWrites(t *testing.T) {
 
 			if string(readData) != string(expectedContent) {
 				t.Fatalf("Content mismatch: expected %q, got %q", string(expectedContent), string(readData))
+			}
+		})
+	}
+}
+
+func TestFileWriteLargeData(t *testing.T) {
+	largeData := genFixedBytes(uint(fromMebibytes(16))) // 16 MB
+
+	for creatorName, creator := range testCreators {
+		t.Run(creatorName, func(t *testing.T) {
+			t.Parallel()
+
+			path := uuid.NewString()
+			t.Cleanup(func() {
+				os.Remove(path)
+			})
+
+			file, err := creator.Create(path)
+			if err != nil {
+				t.Fatalf("Failed to create file: %v", err)
+			}
+
+			remainData := largeData
+			for len(remainData) > 0 {
+				size := min(len(remainData), 512)
+				bytesWritten, err := file.Write(remainData[:size])
+				if err != nil {
+					t.Fatalf("Failed to write large data: %v", err)
+				}
+				if bytesWritten != size {
+					t.Fatalf("Expected to write %d bytes, but wrote %d bytes", size, bytesWritten)
+				}
+				remainData = remainData[size:]
+			}
+
+			err = file.Close()
+			if err != nil {
+				t.Fatalf("Failed to close file after writing: %v", err)
+			}
+
+			file, err = creator.Open(path)
+			if err != nil {
+				t.Fatalf("Failed to open file for reading: %v", err)
+			}
+			var readData = make([]byte, len(largeData))
+			size, err := io.ReadFull(file, readData)
+			if err != nil {
+				t.Fatalf("Failed to read large data: %v", err)
+			}
+			err = file.Close()
+			if err != nil {
+				t.Fatalf("Failed to close file after reading: %v", err)
+			}
+			if size != len(largeData) {
+				t.Fatalf("Expected to read %d bytes, but read %d bytes", len(largeData), len(readData))
+			}
+			if string(readData) != string(largeData) {
+				t.Fatalf("Data mismatch: expected %q, got %q", string(largeData), string(readData))
 			}
 		})
 	}
