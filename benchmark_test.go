@@ -161,16 +161,16 @@ func runBenchmarkRead(b *testing.B, creator FileCreator, size Size) {
 var (
 	creators = map[string]FileCreator{
 		"opendal": OpenDALCreator{},
-		"pure":    PureCreator{},
-		"ffi":     FFICreator{},
+		// "pure":    PureCreator{},
+		// "ffi":     FFICreator{},
 		"os":      OSFileCreator{},
 	}
 
 	sizes = map[string]Size{
 		"4KiB":   fromKibibytes(4),
-		"256KiB": fromKibibytes(256),
-		"4MiB":   fromMebibytes(4),
-		"16MiB":  fromMebibytes(16),
+		// "256KiB": fromKibibytes(256),
+		// "4MiB":   fromMebibytes(4),
+		// "16MiB":  fromMebibytes(16),
 	}
 )
 
